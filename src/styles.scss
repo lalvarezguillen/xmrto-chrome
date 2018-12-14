@@ -1,0 +1,61 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  font-size: 13px;
+  line-height: 1.6;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
+  color: #333;
+}
+
+.clearButton {
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  background: transparent;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.block {
+  padding: 0.5rem 0;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.flex {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+p {
+  margin: 0 0 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.relative {
+  position: relative;
+}
+
+.centered {
+  text-align: center;
+}
+
+.primaryText {
+  color: rgba(253,104,30,0.9);
+}
+
+.bold {
+  font-weight: bold;
+}
