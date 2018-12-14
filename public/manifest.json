@@ -1,15 +1,14 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
+  "manifest_version": 2,
+  "name": "XMR.TO",
+  "description": "Chrome extension",
+  "version": "1.0.0",
+  "content_scripts": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "js": ["/static/js/1.079e0ff2.chunk.js", "/static/js/main.ee9c0f09.chunk.js", "index.js" ],
+      "matches": [ "\u003Call_urls>" ]
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "permissions": [ "https://xmr.to/" ],
+  "web_accessible_resources": [ "*.gif", "*.png", "*.svg" ]
 }
