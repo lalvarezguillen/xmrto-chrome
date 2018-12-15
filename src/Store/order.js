@@ -1,5 +1,5 @@
 import { observable, decorate, action } from 'mobx';
-import { createOrder, getOrderStatus } from '../services';
+import { createOrder, createOrderPP, getOrderStatus } from '../services';
 
 const defaultProps = {
   btcAmount: 0,
@@ -39,17 +39,23 @@ class OrderStore {
   /**
    * Method to create order
    */
-  createOrder = (data) => createOrder(data)
-    .then(({ data }) => this.setData(data))
-    // .then(this.setData)
-    .catch((resp) => {
-      if (resp.response.status === 400) {
-        this.setData({ state: 'NOT_FOUND', ...data })
-      }
-      throw resp.response;
-    });
+  createOrder = (data) => {
+    const requestMethod = data.pp_url ? createOrderPP : createOrder;
+    return requestMethod(data)
+      .then(({ data }) => this.setData(data))
+      // .then(this.setData)
+      .catch((resp) => {
+        if (resp.response.status === 400) {
+          this.setData({ state: 'NOT_FOUND', ...data })
+        }
+        throw resp.response;
+      })
+  };
   clearOrder = () => {
     this.order = { ...defaultProps };
+  };
+  setBTCAddress = (address) => {
+    this.order = { ...this.order, btcDestAddress: address };
   };
   setData = (order) => {
     this.order = {
@@ -77,6 +83,7 @@ class OrderStore {
 decorate(OrderStore, {
   order: observable,
   setData: action,
+  setBTCAddress: action,
   clearOrder: action,
 });
 

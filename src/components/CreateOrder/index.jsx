@@ -19,18 +19,25 @@ export default class CreateOrder extends Component {
     }).isRequired,
     createOrder: PropTypes.func.isRequired,
     changeTab: PropTypes.func.isRequired,
+    setBTCAddress: PropTypes.func.isRequired,
+    order: PropTypes.shape({
+      btcDestAddress: PropTypes.string,
+    }).isRequired,
   };
   state = {
     loading: false,
     usePP: false,
     error: '',
-    address: '',
     btcAmount: 0,
   };
+  componentWillUnmount() {
+    const { setBTCAddress } = this.props;
+    setBTCAddress('');
+  }
   onSubmit = () => {
     this.setState({ loading: true });
-    const { createOrder, changeTab } = this.props;
-    const { usePP, address, btcAmount } = this.state;
+    const { createOrder, changeTab, order: { btcDestAddress: address } } = this.props;
+    const { usePP, btcAmount } = this.state;
     const requestData = usePP
       ? { pp_url: address }
       : {
@@ -52,14 +59,16 @@ export default class CreateOrder extends Component {
     });
   };
   render() {
-    const { loading, usePP, btcAmount = 0, address, error } = this.state;
+    const { loading, usePP, btcAmount = 0, error } = this.state;
     const {
       params: {
         price,
         zeroConfMaxAmount,
         lowerLimit,
         upperLimit,
-      }
+      },
+      order: { btcDestAddress: address },
+      setBTCAddress,
     } = this.props;
     const valid = address && (usePP ? true : btcAmount > 0);
     return (
@@ -74,7 +83,7 @@ export default class CreateOrder extends Component {
                     id="address"
                     type="text"
                     placeholder={usePP ? 'Payment protocol bill URL' : 'Bitcoin wallet destination address'}
-                    onChange={this.onChange}
+                    onChange={(e) => setBTCAddress(e.target.value)}
                     value={address}
                     fluid
                   />

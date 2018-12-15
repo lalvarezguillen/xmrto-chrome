@@ -12,6 +12,11 @@ class App extends Component {
     }).isRequired,
     orderStore: PropTypes.shape({
       order: PropTypes.shape({}),
+      setBTCAddress: PropTypes.shape({}),
+    }).isRequired,
+    routeStore: PropTypes.shape({
+      changeRoute: PropTypes.func,
+      route: PropTypes.number,
     }).isRequired,
   };
   state = {};
@@ -33,10 +38,14 @@ class App extends Component {
         fetchOrder,
         createOrder,
         clearOrder,
+        setBTCAddress,
       },
+      routeStore: { changeRoute, route },
     } = this.props;
     return (
-      <div>
+      <div
+        style={{ width: '350px' }}
+      >
         <Layout
           params={params}
           order={order}
@@ -44,10 +53,13 @@ class App extends Component {
           createOrder={createOrder}
           clearOrder={clearOrder}
           setStatus={setStatus}
+          setBTCAddress={setBTCAddress}
+          changeRoute={changeRoute}
+          route={route}
         />
       </div>
     );
   }
 }
 
-export default inject("paramsStore", "orderStore")(observer(App));
+export default inject("paramsStore", "orderStore", "routeStore")(observer(App));

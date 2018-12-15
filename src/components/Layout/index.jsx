@@ -21,34 +21,34 @@ export default class Layout extends Component {
     createOrder: PropTypes.func,
     clearOrder: PropTypes.func,
     setStatus: PropTypes.func,
+    setBTCAddress: PropTypes.func,
+    changeRoute: PropTypes.func,
+    route: PropTypes.number,
   };
   constructor(props) {
     super(props);
-    this.state = {
-      activeTab: 0,
-    };
   }
   onTabChange = (activeTab) => {
+    const { changeRoute } = this.props;
     this.props.setStatus(STATUS.ONLINE);
-    this.setState({
-      activeTab,
-    });
+    changeRoute(activeTab);
   };
   render() {
-    const { activeTab } = this.state;
     const {
       params: { status: appStatus},
       order: { state },
       createOrder,
       fetchOrder,
       clearOrder,
+      setBTCAddress,
+      route,
     } = this.props;
     return (
       <Card fluid>
         <Card.Content compact>
           <Tab
             onChange={this.onTabChange}
-            active={activeTab}
+            active={route}
             defaultActiveIndex={0}
             panes={[
               {
@@ -56,8 +56,10 @@ export default class Layout extends Component {
                 render: () => (
                   <AppStatus status={appStatus}>
                     <CreateOrder
+                      order={this.props.order}
                       params={this.props.params}
                       createOrder={createOrder}
+                      setBTCAddress={setBTCAddress}
                       changeTab={this.onTabChange}
                     />
                   </AppStatus>
