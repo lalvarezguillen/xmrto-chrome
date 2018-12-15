@@ -1,5 +1,6 @@
 import ParamsStore from './params';
 import OrderStore from './order';
+import RouteStore from './router';
 
 class RootStore {
   /**
@@ -8,9 +9,8 @@ class RootStore {
   constructor() {
     this.paramsStore = new ParamsStore(this);
     this.orderStore = new OrderStore(this);
+    this.routeStore = new RouteStore(this);
   }
 }
 
-const store = new RootStore();
-window.store = store;
-export default store;
+export default new RootStore();
