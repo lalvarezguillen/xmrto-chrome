@@ -4,12 +4,13 @@ import Input from '../common/Input';
 import Form from '../common/Form';
 import Button from '../common/Button';
 import Rate from '../Rate';
+import {inject, observer} from "mobx-react/index";
 
 /**
  * Create Order Form
  * Home page form
  */
-export default class CreateOrder extends Component {
+class CreateOrder extends Component {
   static propTypes = {
     params: PropTypes.shape({
       price: PropTypes.number,
@@ -19,30 +20,32 @@ export default class CreateOrder extends Component {
     }).isRequired,
     createOrder: PropTypes.func.isRequired,
     changeTab: PropTypes.func.isRequired,
-    setBTCAddress: PropTypes.func.isRequired,
-    order: PropTypes.shape({
-      btcDestAddress: PropTypes.string,
+    orderFormStore: PropTypes.shape({
+      address: PropTypes.string,
+      amount: PropTypes.number,
+      usePP: PropTypes.bool,
+      changeAddress: PropTypes.func,
+      changeType: PropTypes.func,
+      changeAmount: PropTypes.func,
     }).isRequired,
   };
   state = {
     loading: false,
-    usePP: false,
     error: '',
-    btcAmount: 0,
   };
   componentWillUnmount() {
-    const { setBTCAddress } = this.props;
-    setBTCAddress('');
+    const { orderFormStore: { changeAddress, changeType } } = this.props;
+    changeAddress('');
+    changeType('address');
   }
   onSubmit = () => {
     this.setState({ loading: true });
-    const { createOrder, changeTab, order: { btcDestAddress: address } } = this.props;
-    const { usePP, btcAmount } = this.state;
+    const { createOrder, changeTab, orderFormStore: { address, usePP, amount } } = this.props;
     const requestData = usePP
       ? { pp_url: address }
       : {
         btc_dest_address: address,
-        btc_amount: btcAmount,
+        btc_amount: amount,
       };
     createOrder(requestData).then(() => {
       changeTab(1);
@@ -50,16 +53,12 @@ export default class CreateOrder extends Component {
       .catch(() => {
         this.setState({
           loading: false,
+          error: 'Could not create your order. Check your input values! Is this a valid bitcoin address?'
         })
       })
   };
-  onChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  };
   render() {
-    const { loading, usePP, btcAmount = 0, error } = this.state;
+    const { loading, error } = this.state;
     const {
       params: {
         price,
@@ -67,10 +66,9 @@ export default class CreateOrder extends Component {
         lowerLimit,
         upperLimit,
       },
-      order: { btcDestAddress: address },
-      setBTCAddress,
+      orderFormStore: { address, usePP, amount, changeAddress, changeType, changeAmount },
     } = this.props;
-    const valid = address && (usePP ? true : btcAmount > 0);
+    const valid = address && (usePP ? true : amount > 0);
     return (
       <div className="relative">
         <div className="block">
@@ -83,7 +81,7 @@ export default class CreateOrder extends Component {
                     id="address"
                     type="text"
                     placeholder={usePP ? 'Payment protocol bill URL' : 'Bitcoin wallet destination address'}
-                    onChange={(e) => setBTCAddress(e.target.value)}
+                    onChange={(e) => changeAddress(e.target.value)}
                     value={address}
                     fluid
                   />
@@ -96,10 +94,8 @@ export default class CreateOrder extends Component {
                             type="button"
                             className="clearButton primaryText"
                             onClick={() => {
-                              this.setState({
-                                address: '',
-                                usePP: false,
-                              });
+                              changeType('address');
+                              changeAddress('');
                             }}
                           >
                             enter your wallet address
@@ -118,10 +114,8 @@ export default class CreateOrder extends Component {
                             type="button"
                             className="clearButton primaryText"
                             onClick={() => {
-                              this.setState({
-                                address: '',
-                                usePP: true,
-                              });
+                              changeType('pp');
+                              changeAddress('');
                             }}
                           >
                             enter payment bill URL
@@ -142,17 +136,17 @@ export default class CreateOrder extends Component {
                       <div className="flex1">
                         <div className="flexVertAlign">
                           <Input
-                            name="btcAmount"
+                            name="amount"
                             type="number"
-                            onChange={(e, data) => this.onChange({ target: { name: data.name, value: data.value }})}
-                            value={btcAmount}
+                            onChange={(e, data) => changeAmount(data.value)}
+                            value={amount}
                             label={{ content: 'BTC', secondary: true }}
                             min={lowerLimit}
                             max={upperLimit}
                             fluid
                           />
                         </div>
-                        <label htmlFor="btcAmount">
+                        <label htmlFor="amount">
                            <span className="fz12 lightText halfTopOffset dBlock">
                               Orders up to <span className="bold">{zeroConfMaxAmount}</span> BTC will be sent out instantly.
                             </span>
@@ -180,7 +174,7 @@ export default class CreateOrder extends Component {
             upperLimit={upperLimit}
             price={price}
             maxAmount={zeroConfMaxAmount}
-            btcAmount={parseFloat(btcAmount)}
+            btcAmount={parseFloat(amount)}
           />
         </div>
         <div className="block centered">
@@ -192,3 +186,5 @@ export default class CreateOrder extends Component {
     );
   }
 }
+
+export default inject("orderFormStore")(observer(CreateOrder));

@@ -13,8 +13,14 @@ ReactDOM.render((
 
 
 window.chrome.runtime.onMessage.addListener((request) => {
-  if (request.type == "setXMRAddress") {
-    store.orderStore.setBTCAddress(request.address);
+  if (request.type === "setXMRAddress") {
+    store.orderFormStore.changeAddress(request.address);
+    store.orderFormStore.changeType('address');
+    store.routeStore.changeRoute(0);
+  }
+  if (request.type === "setPP") {
+    store.orderFormStore.changeAddress(request.address);
+    store.orderFormStore.changeType('pp');
     store.routeStore.changeRoute(0);
   }
 });
