@@ -1,4 +1,4 @@
-const api = 'https://test.xmr.to/api/v2/xmr2btc';
+const api = 'https://xmr.to/api/v2/xmr2btc';
 
 export default {
   api,

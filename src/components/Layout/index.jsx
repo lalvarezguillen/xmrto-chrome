@@ -21,13 +21,9 @@ export default class Layout extends Component {
     createOrder: PropTypes.func,
     clearOrder: PropTypes.func,
     setStatus: PropTypes.func,
-    setBTCAddress: PropTypes.func,
     changeRoute: PropTypes.func,
     route: PropTypes.number,
   };
-  constructor(props) {
-    super(props);
-  }
   onTabChange = (activeTab) => {
     const { changeRoute } = this.props;
     this.props.setStatus(STATUS.ONLINE);
@@ -35,12 +31,11 @@ export default class Layout extends Component {
   };
   render() {
     const {
-      params: { status: appStatus},
+      params: { status: appStatus },
       order: { state },
       createOrder,
       fetchOrder,
       clearOrder,
-      setBTCAddress,
       route,
     } = this.props;
     return (
@@ -56,10 +51,8 @@ export default class Layout extends Component {
                 render: () => (
                   <AppStatus status={appStatus}>
                     <CreateOrder
-                      order={this.props.order}
                       params={this.props.params}
                       createOrder={createOrder}
-                      setBTCAddress={setBTCAddress}
                       changeTab={this.onTabChange}
                     />
                   </AppStatus>
