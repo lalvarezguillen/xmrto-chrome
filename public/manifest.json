@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "XMR.TO",
   "description": "Chrome extension",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "content_scripts": [
     {
       "js": ["content.js" ],
@@ -12,6 +12,7 @@
     }
   ],
   "permissions": [
+    "activeTab",
     "https://xmr.to/",
     "notifications"
   ],
