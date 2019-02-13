@@ -28,17 +28,14 @@ class CreateOrder extends Component {
       changeType: PropTypes.func,
       changeAmount: PropTypes.func,
     }).isRequired,
+    netType: PropTypes.func,
   };
   state = {
     loading: false,
     error: '',
   };
-  componentWillUnmount() {
-    const { orderFormStore: { changeAddress, changeType } } = this.props;
-    changeAddress('');
-    changeType('address');
-  }
-  onSubmit = () => {
+  onSubmit = (e) => {
+    e.preventDefault();
     this.setState({ loading: true });
     const { createOrder, changeTab, orderFormStore: { address, usePP, amount } } = this.props;
     const requestData = usePP
@@ -60,73 +57,31 @@ class CreateOrder extends Component {
   render() {
     const { loading, error } = this.state;
     const {
+      netType,
       params: {
         price,
         zeroConfMaxAmount,
         lowerLimit,
         upperLimit,
       },
-      orderFormStore: { address, usePP, amount, changeAddress, changeType, changeAmount },
+      orderFormStore: { address, usePP, amount, changeAmount },
     } = this.props;
     const valid = address && (usePP ? true : amount > 0);
     return (
       <div className="relative">
         <div className="block">
           <div>
-            <Form>
+            <Form onSubmit={this.onSubmit}>
               <div>
                 <Form.Field>
-                  <Input
-                    name="address"
-                    id="address"
-                    type="text"
-                    placeholder={usePP ? 'Payment protocol bill URL' : 'Bitcoin wallet destination address'}
-                    onChange={(e) => changeAddress(e.target.value)}
-                    value={address}
-                    fluid
-                  />
-                  <label htmlFor="address">
-                    {
-                      usePP && (
-                        <div className="dInlineBlock">
-                          <span className="lightText">or&nbsp;</span>
-                          <button
-                            type="button"
-                            className="clearButton primaryText"
-                            onClick={() => {
-                              changeType('address');
-                              changeAddress('');
-                            }}
-                          >
-                            enter your wallet address
-                          </button>
-                          <span className="lightText">
-                              &nbsp;instead
-                            </span>
-                        </div>
-                      )
-                    }
-                    {
-                      !usePP && (
-                        <div className="dInlineBlock">
-                          <span className="lightText">or&nbsp;</span>
-                          <button
-                            type="button"
-                            className="clearButton primaryText"
-                            onClick={() => {
-                              changeType('pp');
-                              changeAddress('');
-                            }}
-                          >
-                            enter payment bill URL
-                          </button>
-                          <span className="lightText">
-                              &nbsp;instead
-                            </span>
-                        </div>
-                      )
-                    }
-                  </label>
+                  {
+                    netType === 'stagenet' ? (
+                      <div className="error fz12">Stagenet address:</div>
+                    ) : (
+                      <div className="fz12">Address:</div>
+                    )
+                  }
+                  {address}
                 </Form.Field>
               </div>
               <div>

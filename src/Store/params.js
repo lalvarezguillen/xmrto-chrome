@@ -13,6 +13,7 @@ class paramsStore {
     zeroConfEnabled: 0,
     zeroConfMaxAmount: 0,
     status: STATUS.ONLINE,
+    netType: 'mainnet',
   };
   /**
    * Method to fetch params
@@ -36,6 +37,9 @@ class paramsStore {
   };
   setStatus = (status) => {
     this.params = { ...this.params, status };
+  };
+  setNetType = (netType) => {
+    this.params = { ...this.params, netType };
   }
 }
 
@@ -44,6 +48,7 @@ decorate(paramsStore, {
   status: observable,
   setData: action,
   setStatus: action,
+  setNetType: action,
 });
 
 export default paramsStore;

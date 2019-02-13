@@ -1,5 +1,4 @@
 import styled, { css, keyframes } from 'styled-components';
-import Comp from '../Component/index';
 import VAR, { COLORS } from '../../../variables';
 
 const buttonSpin = keyframes`
@@ -14,7 +13,6 @@ const buttonSpin = keyframes`
 
 // eslint-disable-next-line
 export const Button = styled.button`
-  ${Comp};
   text-align: center;
   margin: 0 0.3rem 0 0;
   line-height: 1.25;

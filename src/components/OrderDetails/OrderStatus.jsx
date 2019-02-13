@@ -43,7 +43,7 @@ const OrderStatus = ({ state, uuid }) => (
       <Item.Content>
         <Item.Description>
           <div className="fz15">
-            <div className="fz12 secondaryText">Order Secret Key &mdash; {uuid}</div>
+            <div className="fz12 secondaryText">Order Secret Key &mdash; <span className="bold">{uuid}</span></div>
             <div className="fz20">{statuses[state] ? statuses[state].title : ''}</div>
           </div>
         </Item.Description>

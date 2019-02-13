@@ -105,7 +105,7 @@ export default class Processing extends Component {
             </Statistic.Row>
           </Statistic>
         </div>
-        <div className="block">
+        <div className="block centered">
           <Button
             size="big"
             secondary

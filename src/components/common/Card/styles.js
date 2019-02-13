@@ -1,9 +1,7 @@
 import styled, { css } from 'styled-components';
-import Comp from '../Component/index';
 import VAR from '../../../variables';
 
 export const Card = styled.div`
-  ${Comp}
   width: ${props => props.fluid ? '100%' : 'auto'};
   background: white;
   box-shadow: ${VAR.shadows.secondary};

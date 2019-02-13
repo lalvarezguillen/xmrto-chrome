@@ -1,14 +1,11 @@
 import styled from 'styled-components';
-import Comp from '../Component';
 import VAR from '../../../variables';
 
 export const Tab = styled.div`
-  ${Comp};
   background: white;
 `;
 
 export const TabHeader = styled.div`
-  ${Comp};
   background: white;
   display: flex;
   align-items: flex-start;
@@ -16,7 +13,6 @@ export const TabHeader = styled.div`
 `;
 
 export const TabMenuItem = styled.div`
-  ${Comp};
   background: white;
   border-bottom: ${({ active }) => active ? `3px solid ${VAR.colors.lightPrimary}` : `1px solid ${VAR.colors.separator}`};
   flex: 1;
