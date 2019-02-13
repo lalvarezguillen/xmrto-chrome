@@ -1,9 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
-import Comp from '../Component';
-
 
 export const StyledLoader = styled.div`
-  ${Comp};
   margin: 20px auto;
   width: 100%;
   text-align: center;
@@ -44,7 +41,6 @@ const bounceDelay = keyframes`
 
 
 export const StyledLoaderBounce = styled.div`
-  ${Comp};
   width: 6px;
   height: 6px;
   margin-right: 7px;

@@ -21,10 +21,6 @@ class App extends Component {
       route: PropTypes.number,
     }).isRequired,
   };
-  componentDidMount() {
-    const { paramsStore: { fetchParams } } = this.props;
-    fetchParams();
-  };
   render() {
     const {
       paramsStore: {

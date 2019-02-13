@@ -29,10 +29,9 @@ class OrderStore {
    */
   fetchOrder = (data) => getOrderStatus(data)
     .then(({ data }) => this.setData(data))
-    // .then(this.setData)
     .catch((resp) => {
-      if (resp.response.status === 400) {
-        this.setData({ state: 'NOT_FOUND', ...data })
+      if (resp.response.status === 400 || resp.response.status === 404) {
+        this.setData({ state: 'NOT_FOUND', ...data });
       }
       throw resp.response;
     });

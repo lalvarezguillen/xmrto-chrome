@@ -1,10 +1,7 @@
 import styled, { css } from 'styled-components';
-import Comp from '../Component';
 import VAR from '../../../variables';
 
-export const Form = styled.form`
-  ${Comp}
-`;
+export const Form = styled.form``;
 
 export const FormField = styled.div`
   margin-bottom: 1rem;

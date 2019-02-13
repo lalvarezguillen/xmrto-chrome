@@ -11,9 +11,7 @@ import Loader from '../common/Loader';
 import Tooltip from '../common/Tooltip';
 import Code from '../common/Code';
 import Copy from '../common/Copy';
-import config from '../../config';
 
-//xmrto-KTvMGA
 export default class PaymentWaiting extends Component {
   static propTypes = {
     order: PropTypes.shape({
@@ -36,7 +34,6 @@ export default class PaymentWaiting extends Component {
     // eslint-disable-next-line
     const copy = new Clipboard('.copyToClipboard');
     this.timeout = setInterval(this.updateTimer, 1000);
-    this.dataTimeout = setInterval(this.updateData, config.refreshOrderDataInterval);
     setTimeout(this.updateData, 1000); // need little timeout to fetch data from the server, as we have async creation of order
   }
   componentWillReceiveProps(newProps) {
@@ -44,12 +41,7 @@ export default class PaymentWaiting extends Component {
   }
   componentWillUnmount() {
     clearTimeout(this.timeout);
-    clearTimeout(this.dataTimeout);
   }
-  updateData = () => {
-    const { order: { uuid }, fetchOrder } = this.props;
-    fetchOrder({ uuid });
-  };
   updateTimer = () => {
     const { timeout } = this.state;
     this.setState({ timeout: timeout - 1 });

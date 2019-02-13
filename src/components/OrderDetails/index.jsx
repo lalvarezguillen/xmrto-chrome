@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import PaymentWaiting from './PaymentWaiting';
 import PaymentExist from './PaymentExist';
 import NotFound from './NotFound';
+import config from "../../config";
+import Clipboard from "clipboard";
 
 /**
  * Order details
@@ -14,13 +16,19 @@ export default class OrderDetails extends Component {
     clearOrder: PropTypes.func.isRequired,
     order: PropTypes.shape({}).isRequired,
   };
-  state = {
-    loading: false,
-  };
-  componentWillUnmount() {
-    const { clearOrder } = this.props;
-    clearOrder();
+  componentDidMount() {
+    // eslint-disable-next-line
+    const copy = new Clipboard('.copyToClipboard');
+    this.dataTimeout = setInterval(this.updateData, config.refreshOrderDataInterval);
+    setTimeout(this.updateData, 1000); // need little timeout to fetch data from the server, as we have async creation of order
   }
+  componentWillUnmount() {
+    clearTimeout(this.dataTimeout);
+  }
+  updateData = () => {
+    const { order: { uuid }, fetchOrder } = this.props;
+    fetchOrder({ uuid });
+  };
   renderStatus = () => {
     const { order, order: { state }, clearOrder, fetchOrder } = this.props;
     switch (state) {
@@ -44,7 +52,6 @@ export default class OrderDetails extends Component {
     }
   };
   render() {
-    const { loading } = this.state;
     return (
       <div className="relative">
         <div className="block">

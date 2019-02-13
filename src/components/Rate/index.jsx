@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Tooltip from '../common/Tooltip';
 import Icon from '../common/Icon';
 import VAR, { COLORS } from '../../variables';
-import Comp from '../common/Component';
 import config from '../../config';
 
 const calculateTime = (amount) => {
@@ -28,13 +27,11 @@ const calculateTime = (amount) => {
 // console.log(calculateTime(30), 'should be 10');
 
 const StyledRate = styled.div`
-  ${Comp};
   background: rgba(245,245,245,0.7);
   padding: 1rem;
 `;
 
 StyledRate.Row = styled.div`
-  ${Comp};
   margin-bottom: 1rem;
   
   &:last-child {

@@ -29,5 +29,3 @@ export const getOrderStatus = data => axios.post(`${config.api}/order_status_que
 export const createOrder = data => axios.post(`${config.api}/order_create/`, data);
 
 export const createOrderPP = data => axios.post(`${config.api}/order_create_pp/`, data);
-
-export const getServicesStatus = () => axios.get(`https://updown.io/api/checks?api-key=${config.updown_api_key}`);

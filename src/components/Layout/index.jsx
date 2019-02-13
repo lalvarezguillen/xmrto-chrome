@@ -31,7 +31,7 @@ export default class Layout extends Component {
   };
   render() {
     const {
-      params: { status: appStatus },
+      params: { status: appStatus, netType },
       order: { state },
       createOrder,
       fetchOrder,
@@ -41,27 +41,22 @@ export default class Layout extends Component {
     return (
       <Card fluid>
         <Card.Content compact>
-          <Tab
-            onChange={this.onTabChange}
-            active={route}
-            defaultActiveIndex={0}
-            panes={[
+          <AppStatus status={appStatus}>
+            <div className="layout">
+              <div className="layout__logo" />
               {
-                menuItem: 'Create Order',
-                render: () => (
-                  <AppStatus status={appStatus}>
-                    <CreateOrder
-                      params={this.props.params}
-                      createOrder={createOrder}
-                      changeTab={this.onTabChange}
-                    />
-                  </AppStatus>
-                ),
-              },
+                route === 0 && (
+                  <CreateOrder
+                    netType={netType}
+                    params={this.props.params}
+                    createOrder={createOrder}
+                    changeTab={this.onTabChange}
+                  />
+                )
+              }
               {
-                menuItem: 'Track Order',
-                render: () => (
-                  <AppStatus status={appStatus}>
+                route === 1 && (
+                  <div>
                     {
                       state
                         ? (
@@ -73,11 +68,11 @@ export default class Layout extends Component {
                         )
                         : <TrackOrder fetchOrder={fetchOrder} />
                     }
-                  </AppStatus>
-                ),
-              },
-            ]}
-          />
+                  </div>
+                )
+              }
+            </div>
+          </AppStatus>
         </Card.Content>
       </Card>
     );

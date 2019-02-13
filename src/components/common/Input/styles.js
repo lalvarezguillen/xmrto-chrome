@@ -1,9 +1,7 @@
 import styled, { css } from 'styled-components';
-import Comp from '../Component';
 import VAR, { COLORS } from '../../../variables';
 
 export const InputLabel = styled.div`
-  ${Comp};
   border: 1px solid ${VAR.colors.borderColor};
   border-left: none;
   border-radius: 0 ${VAR.borderRadius}px ${VAR.borderRadius}px 0;
@@ -22,7 +20,6 @@ export const InputLabel = styled.div`
 `;
 
 export const InputButton = styled.button`
-  ${Comp};
   border: 1px solid ${VAR.colors.borderColor};
   border-radius: 0 ${VAR.borderRadius}px ${VAR.borderRadius}px 0;
   border-left: none;
@@ -48,7 +45,6 @@ export const InputButton = styled.button`
 `;
 
 export const InputWrap = styled.div`
-  ${Comp};
   display: inline-flex;
   outline: 0;
   width: auto;
@@ -59,7 +55,6 @@ export const InputWrap = styled.div`
 `;
 
 export const Input = styled.input`
-  ${Comp};
   width: auto;
   border: 1px solid ${VAR.colors.borderColor};
   border-radius: ${VAR.borderRadius}px;
@@ -69,6 +64,8 @@ export const Input = styled.input`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
+  font-size: 1rem;
   
   ${({ hasLabel }) => hasLabel && css`
     border-right: 0;
