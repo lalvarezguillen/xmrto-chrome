@@ -7,32 +7,31 @@ import store from './Store';
 import config from './config';
 import './styles.scss';
 
-ReactDOM.render((
-  <Provider {...store}>
-    <App />
-  </Provider>
-), document.getElementById('root'));
+function render(props = {}) {
+  store.paramsStore.fetchParams();
+  ReactDOM.render((
+    <Provider {...store}>
+      <App {...props} />
+    </Provider>
+  ), document.getElementById('root'));
 
-const eventType = {
-  setXMRAddress: 'address',
-  setPP: 'pp',
-};
+}
 
 window.chrome.runtime.onMessage.addListener((request) => {
-  if (request.type === 'setXMRAddress') {
-    const isTestNet = WAValidator.validate(request.address, 'bitcoin', 'testnet');
-    const isProdNet = WAValidator.validate(request.address, 'bitcoin', 'prod');
-    if (!isTestNet && !isProdNet) {
-      alert('Address INVALID');
-      return;
+  if (request.type === 'runApp') {
+    if (request.usePP) {
+      config.setAPI('mainnet');
+      render({ address: request.address, usePP: true, netType: 'mainnet' });
     } else {
+      const isTestNet = WAValidator.validate(request.address, 'bitcoin', 'testnet');
+      const isProdNet = WAValidator.validate(request.address, 'bitcoin', 'prod');
+      if (!isTestNet && !isProdNet) {
+        alert('Address INVALID');
+        return;
+      }
       const netType = isProdNet ? 'mainnet' : 'stagenet';
       config.setAPI(netType);
-      store.paramsStore.setNetType(netType);
+      render({ address: request.address, usePP: request.usePP, netType });
     }
   }
-  store.paramsStore.fetchParams();
-  store.orderFormStore.changeAddress(request.address);
-  store.orderFormStore.changeType(eventType[request.type]);
-  store.routeStore.changeRoute(0);
 });

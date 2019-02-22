@@ -64,6 +64,7 @@ export default class PaymentWaiting extends Component {
     return (
       <div className="relative">
         <div className="centered">Order Secret Key &mdash; <span className="bold">{uuid}</span></div>
+        <div className="centered error">Important: save the secret key to track the status of your order.</div>
         <div className="block">
           {
             state === 'UNDERPAID'

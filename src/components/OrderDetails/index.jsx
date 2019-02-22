@@ -13,14 +13,13 @@ import Clipboard from "clipboard";
 export default class OrderDetails extends Component {
   static propTypes = {
     fetchOrder: PropTypes.func.isRequired,
-    clearOrder: PropTypes.func.isRequired,
     order: PropTypes.shape({}).isRequired,
   };
   componentDidMount() {
     // eslint-disable-next-line
     const copy = new Clipboard('.copyToClipboard');
     this.dataTimeout = setInterval(this.updateData, config.refreshOrderDataInterval);
-    setTimeout(this.updateData, 1000); // need little timeout to fetch data from the server, as we have async creation of order
+    setTimeout(this.updateData, 1000); // need small timeout to fetch data from the server, as we have async creation of order
   }
   componentWillUnmount() {
     clearTimeout(this.dataTimeout);
@@ -30,21 +29,21 @@ export default class OrderDetails extends Component {
     fetchOrder({ uuid });
   };
   renderStatus = () => {
-    const { order, order: { state }, clearOrder, fetchOrder } = this.props;
+    const { order, order: { state }, fetchOrder } = this.props;
     switch (state) {
       case 'UNPAID':
       case 'TO_BE_CREATED':
       case 'UNDERPAID': {
-        return <PaymentWaiting fetchOrder={fetchOrder} trackAnotherOrder={clearOrder} order={order} />;
+        return <PaymentWaiting fetchOrder={fetchOrder} order={order} />;
       }
       case 'PAID_UNCONFIRMED':
       case 'PAID':
       case 'BTC_SENT': {
-        return <PaymentExist trackAnotherOrder={clearOrder} order={order} />;
+        return <PaymentExist order={order} />;
       }
       case 'TIMED_OUT':
       case 'NOT_FOUND': {
-        return <NotFound trackAnotherOrder={clearOrder} order={order} />;
+        return <NotFound order={order} />;
       }
       default: {
         return <div />;
@@ -61,5 +60,3 @@ export default class OrderDetails extends Component {
     );
   }
 }
-
-// xmrto-7btVWH

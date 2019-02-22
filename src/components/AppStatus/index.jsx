@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { STATUS } from '../../constants';
+import { STATUS, ERRORS, ERROR_CODES } from '../../constants';
 import Item from '../common/Item';
 import ApiErrIcon from './maintenance.svg';
 
@@ -34,7 +34,7 @@ const AppOffline = () => (
   </div>
 );
 
-const AppError = () => (
+const AppError = ({ message }) => (
   <div style={{ padding: '50px', minHeight: '300px' }}>
     <Item>
       <Item.Image>
@@ -43,8 +43,7 @@ const AppError = () => (
       <Item.Content>
         <Item.Header><span className="bold fz20">XMR.to is currently not available</span></Item.Header>
         <Item.Description>
-          Sorry about that.
-          We will accept new orders once we are available again, come back soon!
+          { message }
         </Item.Description>
       </Item.Content>
     </Item>
@@ -56,7 +55,11 @@ const AppStatus = ({ children, status }) => {
     case STATUS.OFFLINE:
       return <AppOffline />;
     case STATUS.APIERROR:
-      return <AppError />;
+      return <AppError message={ERRORS.apiError} />;
+    case STATUS.IPBLOCKED:
+      return <AppError message={ERRORS[ERROR_CODES.IPBLOCKED]} />;
+    case STATUS.RATELIMIT:
+      return <AppError message={ERRORS[ERROR_CODES.RATELIMIT]} />;
     default:
       return children;
   }

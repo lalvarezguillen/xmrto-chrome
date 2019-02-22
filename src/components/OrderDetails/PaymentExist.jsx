@@ -17,7 +17,6 @@ export default class Processing extends Component {
       state: PropTypes.string,
       uuid: PropTypes.string,
     }).isRequired,
-    trackAnotherOrder: PropTypes.func.isRequired,
   };
   componentDidMount() {
     // eslint-disable-next-line
@@ -35,7 +34,6 @@ export default class Processing extends Component {
         state,
         uuid,
       },
-      trackAnotherOrder,
     } = this.props;
     return (
       <div className="relative">
@@ -104,15 +102,6 @@ export default class Processing extends Component {
               <div>{xmrAmountTotal} XMR = {btcAmount} BTC</div>
             </Statistic.Row>
           </Statistic>
-        </div>
-        <div className="block centered">
-          <Button
-            size="big"
-            secondary
-            onClick={trackAnotherOrder}
-          >
-            Track Another Order
-          </Button>
         </div>
       </div>
     );
