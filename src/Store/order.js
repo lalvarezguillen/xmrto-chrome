@@ -50,12 +50,6 @@ class OrderStore {
         throw resp.response;
       })
   };
-  clearOrder = () => {
-    this.order = { ...defaultProps };
-  };
-  setBTCAddress = (address) => {
-    this.order = { ...this.order, btcDestAddress: address };
-  };
   setData = (order) => {
     this.order = {
       ...this.order,
@@ -82,8 +76,6 @@ class OrderStore {
 decorate(OrderStore, {
   order: observable,
   setData: action,
-  setBTCAddress: action,
-  clearOrder: action,
 });
 
 export default OrderStore;

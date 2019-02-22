@@ -4,13 +4,12 @@ import Input from '../common/Input';
 import Form from '../common/Form';
 import Button from '../common/Button';
 import Rate from '../Rate';
-import {inject, observer} from "mobx-react/index";
-
+import { ERRORS } from '../../constants';
 /**
  * Create Order Form
  * Home page form
  */
-class CreateOrder extends Component {
+export default class CreateOrder extends Component {
   static propTypes = {
     params: PropTypes.shape({
       price: PropTypes.number,
@@ -19,53 +18,49 @@ class CreateOrder extends Component {
       upperLimit: PropTypes.number,
     }).isRequired,
     createOrder: PropTypes.func.isRequired,
-    changeTab: PropTypes.func.isRequired,
-    orderFormStore: PropTypes.shape({
-      address: PropTypes.string,
-      amount: PropTypes.number,
-      usePP: PropTypes.bool,
-      changeAddress: PropTypes.func,
-      changeType: PropTypes.func,
-      changeAmount: PropTypes.func,
-    }).isRequired,
-    netType: PropTypes.func,
+    usePP: PropTypes.bool,
+    address: PropTypes.string.isRequired,
+    netType: PropTypes.string.isRequired,
   };
   state = {
     loading: false,
     error: '',
+    amount: '',
   };
   onSubmit = (e) => {
     e.preventDefault();
     this.setState({ loading: true });
-    const { createOrder, changeTab, orderFormStore: { address, usePP, amount } } = this.props;
+    const { address, usePP, createOrder } = this.props;
+    const { amount } = this.state;
+    const errorCallback = (error) => {
+      this.setState({
+        loading: false,
+        error: ERRORS[error.data.error] || ERRORS.defaultError,
+      });
+    };
     const requestData = usePP
       ? { pp_url: address }
       : {
         btc_dest_address: address,
         btc_amount: amount,
       };
-    createOrder(requestData).then(() => {
-      changeTab(1);
-    })
-      .catch(() => {
-        this.setState({
-          loading: false,
-          error: 'Could not create your order. Check your input values! Is this a valid bitcoin address?'
-        })
-      })
+    createOrder(requestData)
+      .catch(errorCallback);
   };
   render() {
     const { loading, error } = this.state;
     const {
-      netType,
       params: {
         price,
         zeroConfMaxAmount,
         lowerLimit,
         upperLimit,
       },
-      orderFormStore: { address, usePP, amount, changeAmount },
+      netType,
+      address,
+      usePP,
     } = this.props;
+    const { amount } = this.state;
     const valid = address && (usePP ? true : amount > 0);
     return (
       <div className="relative">
@@ -81,7 +76,16 @@ class CreateOrder extends Component {
                       <div className="fz12">Address:</div>
                     )
                   }
-                  {address}
+                  <div className="breakWord primaryText">
+                    {address}
+                  </div>
+                  {
+                    usePP && (
+                      <div className="hint">
+                        Fill in your "Contact & Refund Email" in bitpay dialog, and continue with XMR.to
+                      </div>
+                    )
+                  }
                 </Form.Field>
               </div>
               <div>
@@ -93,7 +97,7 @@ class CreateOrder extends Component {
                           <Input
                             name="amount"
                             type="number"
-                            onChange={(e, data) => changeAmount(data.value)}
+                            onChange={(e, data) => this.setState({ amount: data.value })}
                             value={amount}
                             label={{ content: 'BTC', secondary: true }}
                             min={lowerLimit}
@@ -141,5 +145,3 @@ class CreateOrder extends Component {
     );
   }
 }
-
-export default inject("orderFormStore")(observer(CreateOrder));

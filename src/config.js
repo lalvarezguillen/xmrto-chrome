@@ -4,7 +4,7 @@ const api = {
 };
 
 export default {
-  api: api.mainnet,
+  api: api.stagenet,
   decimalCount: 4,
   refreshOrderParamsInterval: 30000,
   refreshOrderDataInterval: 30000,
