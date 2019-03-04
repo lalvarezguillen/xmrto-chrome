@@ -1,8 +1,12 @@
 {
   "manifest_version": 2,
-  "name": "XMR.TO",
-  "description": "Chrome extension",
+  "name": "XMR.to",
+  "description": "Send money via XMR.to",
   "version": "1.0.2",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
   "content_scripts": [
     {
       "js": ["content.js"],
@@ -14,7 +18,8 @@
   "permissions": [
     "activeTab",
     "https://xmr.to/",
-    "notifications"
+    "notifications",
+    "storage"
   ],
   "background":{
     "scripts":["background.js"]

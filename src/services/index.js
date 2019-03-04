@@ -49,7 +49,7 @@ export const getOrderParameters = () => axios.get(`${config.api}/order_parameter
   .then(successCallback, errorCallback([isOffline, isIPBlocked, isRateLimit, isAPIError]));
 
 export const getOrderStatus = data => axios.post(`${config.api}/order_status_query/`, data)
-  .then(successCallback, errorCallback([isOffline, isIPBlocked, isRateLimit, isAPIError]));
+  .then(successCallback, errorCallback([isOffline, isIPBlocked, isRateLimit]));
 
 export const createOrder = data => axios.post(`${config.api}/order_create/`, data)
   .then(successCallback, errorCallback([isOffline, isIPBlocked, isAPIError]));
