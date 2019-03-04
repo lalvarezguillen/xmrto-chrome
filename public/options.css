@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+}
+.options {
+  font-family: Lato,Helvetica Neue,Arial,Helvetica,sans-serif;
+  padding: 0 1rem 1rem;
+}
+
+.options__status {
+  margin-bottom: 0.5rem;
+}
+.options__actions {
+  margin-top: 0.5rem;
+}
