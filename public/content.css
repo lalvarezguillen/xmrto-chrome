@@ -1,0 +1,36 @@
+#xmrtoapp {
+  position: fixed;
+  top:0;
+  right: 0;
+  z-index: 1000000;
+  display: none;
+}
+
+#xmrtoapp-close {
+  position: absolute;
+  top:0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+#xmrtoapp-iframe {
+  width: 350px;
+  height: 600px;
+  border: none;
+}
+
+.xmrtoButton {
+  background: url('chrome-extension://__MSG_@@extension_id__/images/icon48.png') no-repeat center;
+  background-size: 100%;
+  border: none;
+  display: inline-block;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  cursor: pointer;
+}
