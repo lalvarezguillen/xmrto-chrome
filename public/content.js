@@ -50,7 +50,7 @@ class RunXMRApp {
       }
     } else if (node.nodeType === 3) {
       // (Text node)
-      if (btc_regex.test(node.data)) {
+      if (btc_regex.test(node.data) && node.parentNode.nodeName !== 'NOSCRIPT') {
         this.wrapMatchesInNode(node, btc_regex);
       }
       if (pp_regexp.test(node.data)) {
@@ -65,7 +65,7 @@ class RunXMRApp {
    */
   wrapMatchesInNode(textNode, regexp) {
     const temp = document.createElement('div');
-    temp.innerHTML = textNode.data.replace(regexp, '$&<button class="xmrtoButton" data-address="$&" title="Send money via XMR.to" /> ');
+    temp.innerHTML = textNode.data.replace(regexp, '$&<button class="xmrtoButton" data-address="$&" title="Send money via XMR.to"></button>');
     // Extract produced nodes and insert them
     // before original textNode:
     while (temp.firstChild) {
