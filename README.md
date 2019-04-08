@@ -1,4 +1,12 @@
-Chrome extension for xmr.to
+# Pay any Bitcoin address using Monero and XMR.to
+
+XMR.to allows you to make a Bitcoin payment with the strong privacy provided by Monero.
+This means that using Monero together with XMR.TO, you can pay any Bitcoin address in the world while protecting your privacy.
+
+Once you install this extension, the XMR.to logo appears next to all Bitcoin addresses on webpages you visit.
+To pay that Bitcoin address just click on XMR.to icon, and follow instructions in modal window.
+
+App: https://chrome.google.com/webstore/developer/edit/amndhfgjaafohnepkldkjnijlpbaofdk
 
 ## Available Scripts
 
