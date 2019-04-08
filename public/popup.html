@@ -21,6 +21,20 @@
       cursor: pointer;
       display: block;
     }
+    .xmrto-menu__menu-button {
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0.5rem;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .xmrto-menu__menu-button:active {
+      color: rgba(253, 104, 30, 0.9);
+    }
     .xmrto-menu__link:hover {
       color: rgba(253, 104, 30, 0.9);
     }
@@ -28,6 +42,12 @@
 </head>
 <body>
   <ul class="xmrto-menu">
+    <li class="xmrto-menu__menu-item">
+      <button class="xmrto-menu__menu-button" id="parse">
+        Parse page &nbsp;
+        <img width="16" height="16" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABNVBMVEUAAAD/ZCH9Zx7+Zx79aB79aB79aB7/aiD/ZjP9aR79aR79aB3/VSv/Yxz8aB/9aB79aR78aB38aR38aR79aB/9aB78aB7/axv8aB79aB7/Zhr9aB79aB78aR79aB/8Zx/8Zx39Zx7/bB39aB79aB/9aR39aB7/ahr9aR/9aB7/YCD/bST9aB79Zx79Zx79aR38aB78Zx39aB77Zx7/aR3/AAD9aB78Zx78aB/9Zx78aB79aB79Zx38aB39aR/9aB7/gAD/aR79aB79Zx3/ZiL9aB39aB7/Zx3/aB79aR//ahX9aB39aB3/VQD9Zx3+aR39aB79aB77Zxz/aR77aB39aB79Zx79aB79aB7+aB7/ZiD9aB/9aB79Zx7/Zh3/XRf+aB79aB39aB7+aB79Zx79aB4AAACnjsV8AAAAZXRSTlMAF2252u5uGAWB9IIGEsDpl2BOX5bowhPB/QqA/MOFUk+IGvZ9evcddeQIB+J5j4vEV/lDPQHnVFHvxoeDx3zdBCL6ah6T+D47jQzQaQNordLXSDNH1pn7kb0o0fXPIwu8nfCqb2FcGBwAAAABYktHRACIBR1IAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH4wQIDjA55u3eUgAAAP9JREFUKM91kXs3AkEchodW2qTcaS2JbHIXcoki98id3O/P9/8KtLPGjlPvP/Oc95n5nTkzQtTS1BwwWoxAsFVoCZlhZMJtEV/fHoVYR2dXd08v9PWrPjJA3LRctAZthtSZYeyE2jVik/RwdIyUb+44TlrSBJlJn5iaZkZSlFntinPMS8iwoIkEMQlZFjWxRHzZhRwrmlhlTcI6eU1ssCmhQDHk67cMTEnbJYI+sUNp18M99g9Uf+hw9MvlY5yTiouVUwfO1OT0OVykLq+uCzfu2/+Z8m3V+4/q3b1mxEP+8Ynsc/JFWP/MT17lUsd4sd4amtqZd9HAfIi65jP39Q0k3TcgqfshwQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOS0wNC0wOFQxMjo0ODo1NyswMjowMDd6EIgAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTktMDQtMDhUMTI6NDg6NTcrMDI6MDBGJ6g0AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAABJRU5ErkJggg==" alt="parse page">
+      </button>
+    </li>
     <li class="xmrto-menu__menu-item">
       <a
           target="_blank"
@@ -37,7 +57,8 @@
       >
         Track Order
       </a>
-    </li><li class="xmrto-menu__menu-item">
+    </li>
+    <li class="xmrto-menu__menu-item">
       <a
           target="_blank"
           rel="noopener noreferrer"
@@ -58,5 +79,6 @@
       </a>
     </li>
   </ul>
+  <script src="popup.js"></script>
 </body>
 </html>

@@ -1,6 +1,13 @@
 const btc_regex = /\b[123mn][a-km-zA-HJ-NP-Z0-9]{26,35}\b/g;
 const pp_regexp = /(bitcoin:\?r=)?https:\/\/bitpay.com\/(invoice\?id=|i\/)\w+/;
 
+function removeElementsByClass(className){
+  const elements = document.getElementsByClassName(className);
+  while(elements.length > 0){
+    elements[0].parentNode.removeChild(elements[0]);
+  }
+}
+
 class RunXMRApp {
   constructor(target) {
     this.target = target;
@@ -16,6 +23,13 @@ class RunXMRApp {
     if (pp_regexp.test(window.location.href)) {
       this.checkToS(this.runPaymentProtocol);
     }
+    chrome.runtime.onMessage.addListener(
+      (request) => {
+        if (request.action === "parse_page") {
+          removeElementsByClass('xmrtoButton');
+          this.injectIcon(this.target);
+        }
+      });
   }
 
   /**
@@ -52,9 +66,6 @@ class RunXMRApp {
       // (Text node)
       if (btc_regex.test(node.data) && node.parentNode.nodeName !== 'NOSCRIPT') {
         this.wrapMatchesInNode(node, btc_regex);
-      }
-      if (pp_regexp.test(node.data)) {
-        this.wrapMatchesInNode(node, pp_regexp);
       }
     }
   }
@@ -96,22 +107,22 @@ class RunXMRApp {
    */
   addListeners() {
     const self = this;
-    const addressNodes = document.getElementsByClassName('xmrtoButton');
     this.appNodeCloseBtn.addEventListener('click', () => {
       this.appNode.style.display = 'none';
     });
     // add click listener for each xmr.to icon
-    for (let i = 0; i < addressNodes.length; i++) {
-      addressNodes[i].addEventListener('click', function(e) {
+    document.addEventListener('click', function(e) {
+      let target = e.target;
+      if (target.className.includes('xmrtoButton')) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        const address = this.getAttribute('data-address');
+        const address = target.getAttribute('data-address');
         self.checkToS(function () {
           self.openAppWithAddress(address)
         });
-      });
-    }
+      }
+    });
   }
 
   /**
@@ -134,7 +145,6 @@ class RunXMRApp {
    * Show options
    */
   showOptions() {
-    console.log(chrome.runtime.openOptionsPage);
     chrome.runtime.sendMessage({type: "options"});
   }
   /**
