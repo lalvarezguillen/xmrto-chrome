@@ -17,21 +17,25 @@ function render(props = {}) {
 
 }
 
-window.chrome.runtime.onMessage.addListener((request) => {
-  if (request.type === 'runApp') {
-    if (request.usePP) {
-      config.setAPI('mainnet');
-      render({ address: request.address, usePP: true, netType: 'mainnet' });
-    } else {
-      const isTestNet = WAValidator.validate(request.address, 'bitcoin', 'testnet');
-      const isProdNet = WAValidator.validate(request.address, 'bitcoin', 'prod');
-      if (!isTestNet && !isProdNet) {
-        alert('Address INVALID');
-        return;
+if (window.chrome.runtime.onMessage) {
+  window.chrome.runtime.onMessage.addListener((request) => {
+    if (request.type === 'runApp') {
+      if (request.usePP) {
+        config.setAPI('mainnet');
+        render({ address: request.address, usePP: true, netType: 'mainnet' });
+      } else {
+        const isTestNet = WAValidator.validate(request.address, 'bitcoin', 'testnet');
+        const isProdNet = WAValidator.validate(request.address, 'bitcoin', 'prod');
+        if (!isTestNet && !isProdNet) {
+          alert('Address INVALID');
+          return;
+        }
+        const netType = isProdNet ? 'mainnet' : 'stagenet';
+        config.setAPI(netType);
+        render({ address: request.address, usePP: request.usePP, netType });
       }
-      const netType = isProdNet ? 'mainnet' : 'stagenet';
-      config.setAPI(netType);
-      render({ address: request.address, usePP: request.usePP, netType });
     }
-  }
-});
+  });
+} else {
+  render({ address: 'mvCdyEyErakeBypWjyXDaq2iw98B1Ksm6W', usePP: false, netType: 'stagenet' });
+}
