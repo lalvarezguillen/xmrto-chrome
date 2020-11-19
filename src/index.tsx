@@ -26,9 +26,12 @@ function render({
 // @ts-ignore
 window.renderReactApp = render;
 // @ts-ignore
-if (window.chrome.runtime.onMessage) {
+console.log(window.chrome);
+// @ts-ignore
+if (window.chrome && window.chrome.runtime.onMessage) {
   // @ts-ignore
   window.chrome.runtime.onMessage.addListener((request) => {
+    console.log(request);
     if (request.type === "runApp") {
       const isTestNet = WAValidator.validate(
         request.address,
