@@ -1,74 +1,26 @@
-* {
-  box-sizing: border-box;
+@import "styles/mixins";
+
+.app {
   margin: 0;
   padding: 0;
-}
-html {
-  font-size: 13px;
-  line-height: 1.6;
-}
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
-  color: #333;
-  font-size: 1rem;
-}
-
-.clearButton {
-  border: none;
-  padding: 0;
-  margin: 0;
-  outline: none;
-  background: transparent;
-  font-size: inherit;
-  cursor: pointer;
-}
-
-.block {
-  padding: 0.5rem 0;
-
-  &:last-child {
-    padding-bottom: 0;
-  }
-}
-
-.flex {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
+  width: 610px;
+  height: 100%;
+  border: 2px solid #f1f1f1;
 
-p {
-  margin: 0 0 1rem;
-
-  &:last-child {
-    margin-bottom: 0;
+  &__left {
+    flex: 1;
+    padding: 1rem;
+    width: 370px;
+    min-width: 370px;
+  }
+  &__right {
+    padding: 2rem;
+    background: #fbfbfb;
   }
 }
 
-.relative {
-  position: relative;
-}
-
-.centered {
-  text-align: center;
-}
-
-.hint {
-  color: rgba(34,48,66,0.6);
-  font-size: 0.86rem;
-  line-height: 1;
-}
-
-.primaryText {
-  color: rgba(253,104,30,0.9);
-}
-
-.error {
-  color: #FF5151;
-}
-
-.bold {
-  font-weight: bold;
+.address {
+  font-family: monospace;
+  font-size: 0.5rem;
 }

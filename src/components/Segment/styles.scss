@@ -1,0 +1,15 @@
+.segment {
+  padding: 1rem;
+  border-radius: 5px;
+  background: rgb(255, 250, 247);
+}
+
+.theme--dark {
+  .segment {
+    background: rgba(255,129,67,0.1);
+  }
+}
+
+.segment--positive {
+  background-color: rgba(71,207,118,0.07)
+}

@@ -1,5 +1,4 @@
 const btc_regex = /\b[123mn][a-km-zA-HJ-NP-Z0-9]{26,35}\b/g;
-const pp_regexp = /(bitcoin:\?r=)?https:\/\/bitpay.com\/(invoice\?id=|i\/)\w+/;
 
 function removeElementsByClass(className){
   const elements = document.getElementsByClassName(className);
@@ -19,10 +18,6 @@ class RunXMRApp {
     this.renderReactApp(this.target);
     // add event listeners to open/close modal window
     this.addListeners();
-    // check if current page has payment protocol and show notification
-    if (pp_regexp.test(window.location.href)) {
-      this.checkToS(this.runPaymentProtocol);
-    }
     chrome.runtime.onMessage.addListener(
       (request) => {
         if (request.action === "parse_page") {
@@ -76,7 +71,7 @@ class RunXMRApp {
    */
   wrapMatchesInNode(textNode, regexp) {
     const temp = document.createElement('div');
-    temp.innerHTML = textNode.data.replace(regexp, '$&<button class="xmrtoButton" data-address="$&" title="Send money via XMR.to"></button>');
+    temp.innerHTML = textNode.data.replace(regexp, '$&<button class="xmrtoButton" data-address="$&" title="Pay bitcoin in monero"></button>');
     // Extract produced nodes and insert them
     // before original textNode:
     while (temp.firstChild) {
@@ -156,23 +151,13 @@ class RunXMRApp {
     appNode.style.display = 'block';
     chrome.runtime.sendMessage({ type: "runApp", address });
   }
-  /**
-   * Check if page url contain payment protocol and show notification if page support PP
-   */
-  runPaymentProtocol() {
-    // shome chrome notification
-    chrome.runtime.sendMessage({type: "notification", options: {
-        type: 'basic',
-        title: 'You can pay in Monero using XMR.TO',
-        message: 'Fill in your "Contact & Refund Email" in bitpay dialog, and continue with XMR.to',
-        iconUrl: 'images/icon128.png'
-      }});
-    setTimeout(() => {
-      const appNode = document.getElementById('xmrtoapp');
-      appNode.style.display = 'block';
-      chrome.runtime.sendMessage({ type: "runApp", usePP: true, address: window.location.href });
-    }, 500);
-  }
 }
+
+window.addEventListener("message", (event) => {
+  if (event.data.type === 'resize') {
+    const iframe = document.getElementById('xmrtoapp-iframe');
+    iframe.style.height = `${event.data.data.height}px`;
+  }
+}, false);
 
 const xmrApp = new RunXMRApp(document.body);

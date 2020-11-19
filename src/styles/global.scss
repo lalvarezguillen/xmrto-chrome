@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
+  background: white;
+}
+
+button, a, input, textarea {
+  font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
+}
+
+.clear-btn {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-size: inherit;
+  color: inherit;
+  outline: none;
+  border: none;
+}
+
+.tdn {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.item {
+  text-align: left;
+  display: inline-flex;
+  &__image {
+    margin-right: 1rem;
+  }
+  &__copy {
+    font-weight: bold;
+  }
+}
+
+.text-break-all {
+  word-break: break-all;
+}

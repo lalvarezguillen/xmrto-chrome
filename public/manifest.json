@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "XMR.to",
-  "description": "Send money via XMR.to",
+  "description": "Xmr.To allows privacy conscious individuals to pay bitcoin-accepting merchants in monero",
   "version": "1.0.2",
   "options_ui": {
     "page": "options.html",
@@ -39,7 +39,6 @@
     "*.png",
     "*.svg",
     "/static/css/main.css",
-    "/static/js/1.chunk.js",
     "/static/js/main.js",
     "index.html"
   ]
