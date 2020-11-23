@@ -45,13 +45,15 @@ const OrderModel = types.model("OrderModel", {
   btcAmountPartial: types.number,
 });
 
+export interface IOrderModel extends Instance<typeof OrderModel> {}
+
 export const OrderStoreModel = types
   .model("OrderStoreModel", {
     order: OrderModel,
     orderAmount: types.number,
   })
   .actions((self) => ({
-    setData: (data: { [key: string]: string | number }) => {
+    setData: (data: { [key: string]: string | number }): IOrderModel => {
       self.order = { ...initialState.order, ...data };
       return self.order;
     },
@@ -87,7 +89,7 @@ export const OrderStoreModel = types
         return Promise.reject(error.response);
       }
     }),
-    setOrderDestAddress: (address: string) => {
+    setOrderDestAddress: (address: string): void => {
       self.order = { ...initialState.order, btcDestAddress: address };
     },
     completeOrder: (data: { uuid: string }): Promise<void> =>

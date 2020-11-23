@@ -34,20 +34,20 @@ const CreateOrder: React.FC = () => {
   const [amount, setAmount] = useState(0);
   const [error, setError] = useState("");
 
-  function successCallback() {
+  function successCallback(): void {
     setError("");
     setTimeout(() => {}, 1000);
   }
   function errorCallback(err: {
     data: { error: string; error_msg: string; error_msg_display: string };
-  }) {
+  }): void {
     setLoading(false);
     setError(ERRORS[err.data.error] || ERRORS.defaultError);
     if (err.data.error_msg_display || err.data.error_msg) {
       setError(err.data.error_msg_display || err.data.error_msg);
     }
   }
-  function onSubmit() {
+  function onSubmit(): Promise<void> {
     setLoading(true);
     const requestData = {
       btc_dest_address: btcDestAddress,
@@ -56,7 +56,7 @@ const CreateOrder: React.FC = () => {
     };
     return createOrder(requestData).then(successCallback, errorCallback);
   }
-  function onCurrencyChange(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onCurrencyChange(e: React.ChangeEvent<HTMLSelectElement>): void {
     const {
       target: { value },
     } = e;
@@ -81,7 +81,7 @@ const CreateOrder: React.FC = () => {
           placeholder="Order amount"
           id="amount"
           value={amount}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
             setAmount(parseFloat(e.target.value))
           }
           select={
@@ -106,16 +106,18 @@ const CreateOrder: React.FC = () => {
           label={
             <span>
               I’ve read and agree to the&nbsp;
-              <button
-                type="button"
-                className="clear-btn c-hand text-primary"
-                onClick={() => {}}
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://xmr.to/terms-of-service"
               >
-                Terms of Service
-              </button>
+                <button type="button" className="clear-btn c-hand text-primary">
+                  Terms of Service
+                </button>
+              </a>
             </span>
           }
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
             setConfirmed(e.target.checked)
           }
         />

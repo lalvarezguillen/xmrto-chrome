@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useMst } from "../../store";
 import IconTimeout from "./timeout.svg";
 
-const ExpiredOrder = () => {
+const ExpiredOrder: React.FC = () => {
   const {
     orderStore: {
       order: { btcDestAddress },
@@ -54,7 +54,12 @@ const ExpiredOrder = () => {
           in the FAQ.
         </p>
         <div className="text-center">
-          <Button type="button" onClick={() => setData({ btcDestAddress })}>
+          <Button
+            type="button"
+            onClick={(): void => {
+              setData({ btcDestAddress });
+            }}
+          >
             Create new order
           </Button>
         </div>

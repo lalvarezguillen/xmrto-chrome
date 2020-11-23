@@ -28,7 +28,7 @@ const App: React.FC = () => {
         fetchOrder({ uuid: order.uuid });
       }
     }, config.refreshOrderDataInterval);
-    return () => {
+    return (): void => {
       clearInterval(paramsIntervalID);
       clearInterval(dataIntervalID);
     };
@@ -42,7 +42,7 @@ const App: React.FC = () => {
       "*"
     );
   }, [order.state]);
-  function renderSwitch() {
+  function renderSwitch(): React.ReactElement {
     switch (order.state) {
       case ORDER_STATE.TO_BE_CREATED: {
         return <div>Please wait...</div>;

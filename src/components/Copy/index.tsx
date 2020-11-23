@@ -16,7 +16,7 @@ const CopyToClipboard: React.FC<ICopyToClipboard> = ({ text, value, id }) => {
     // eslint-disable-next-line
     const copy = new Clipboard(`.copyToClipboard_${hash}`);
   }, [hash]);
-  function onClick() {
+  function onClick(): void {
     setClicked(true);
     setTimeout(() => {
       setClicked(false);

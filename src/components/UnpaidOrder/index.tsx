@@ -59,7 +59,7 @@ const WalletCode: React.FC<IWalletCode> = ({
         <button
           type="button"
           className="text-primary clear-btn"
-          onClick={() => {
+          onClick={(): void => {
             setUseGUI((v) => !v);
           }}
         >
@@ -97,7 +97,7 @@ const WalletQRCode: React.FC<IWalletCode> = ({
   );
 };
 
-const UnpaidOrder = () => {
+const UnpaidOrder: React.FC = () => {
   const {
     orderStore: {
       order: {
@@ -114,7 +114,7 @@ const UnpaidOrder = () => {
   } = useMst();
   const [tabIndex, setTabIndex] = useState(0);
   const [loading, setLoading] = useState(false);
-  function onCompleteOrder() {
+  function onCompleteOrder(): void {
     completeOrder({ uuid }).then(() => {
       fetchOrder({ uuid }).then();
     });
@@ -172,7 +172,7 @@ const UnpaidOrder = () => {
               receivingSubaddress={receivingSubaddress}
               remainingAmountIncoming={remainingAmountIncoming}
               incomingAmountTotal={incomingAmountTotal}
-              onChange={() => setTabIndex(1)}
+              onChange={(): void => setTabIndex(1)}
             />
           )}
           {tabIndex === 1 && (
@@ -181,7 +181,7 @@ const UnpaidOrder = () => {
               remainingAmountIncoming={remainingAmountIncoming}
               incomingAmountTotal={incomingAmountTotal}
               receivingSubaddress={receivingSubaddress}
-              onChange={() => setTabIndex(0)}
+              onChange={(): void => setTabIndex(0)}
             />
           )}
         </div>

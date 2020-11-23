@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import OrderSummary from "../OrderSummary";
 import { useMst } from "../../store";
 
-const PaidOrder = () => {
+const PaidOrder: React.FC = () => {
   const {
     orderStore: {
       order: {

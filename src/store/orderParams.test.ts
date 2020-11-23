@@ -2,12 +2,13 @@ import {
   ParamsStoreModel,
   initialState,
   IParamsStoreModel,
+  IOrderParamsModel,
 } from "./orderParams";
 import orderParamsMock from "../__mock__/orderParams";
 import { STATUS } from "../constants";
 
 jest.mock("../services", () => ({
-  getOrderParameters: () =>
+  getOrderParameters: (): Promise<{ data: IOrderParamsModel }> =>
     Promise.resolve({ data: require("../__mock__/orderParams").default }),
 }));
 

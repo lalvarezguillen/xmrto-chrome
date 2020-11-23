@@ -12,7 +12,7 @@ function render({
 }: {
   address: string;
   networkType: string;
-}) {
+}): void {
   rootStore.orderStore.setOrderDestAddress(address);
   config.setAPI(networkType);
   ReactDOM.render(
@@ -23,33 +23,30 @@ function render({
   );
 }
 
-// @ts-ignore
 window.renderReactApp = render;
-// @ts-ignore
-console.log(window.chrome);
-// @ts-ignore
 if (window.chrome && window.chrome.runtime.onMessage) {
-  // @ts-ignore
-  window.chrome.runtime.onMessage.addListener((request) => {
-    console.log(request);
-    if (request.type === "runApp") {
-      const isTestNet = WAValidator.validate(
-        request.address,
-        "bitcoin",
-        "testnet"
-      );
-      const isProdNet = WAValidator.validate(
-        request.address,
-        "bitcoin",
-        "prod"
-      );
-      const networkType = isProdNet ? "mainnet" : "stagenet";
-      if (!isTestNet && !isProdNet) {
-        // eslint-disable-next-line
-        console.error("Address INVALID");
-        return;
+  window.chrome.runtime.onMessage.addListener(
+    (request: { type: string; address: string }) => {
+      console.log(request);
+      if (request.type === "runApp") {
+        const isTestNet = WAValidator.validate(
+          request.address,
+          "bitcoin",
+          "testnet"
+        );
+        const isProdNet = WAValidator.validate(
+          request.address,
+          "bitcoin",
+          "prod"
+        );
+        const networkType = isProdNet ? "mainnet" : "stagenet";
+        if (!isTestNet && !isProdNet) {
+          // eslint-disable-next-line
+          console.error("Address INVALID");
+          return;
+        }
+        render({ address: request.address, networkType });
       }
-      render({ address: request.address, networkType });
     }
-  });
+  );
 }

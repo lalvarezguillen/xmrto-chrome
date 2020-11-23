@@ -35,6 +35,8 @@ const OrderParamsModel = types.model("OrderParamsModel", {
   ),
 });
 
+export interface IOrderParamsModel extends Instance<typeof OrderParamsModel> {}
+
 export const ParamsStoreModel = types
   .model("ParamsStoreModel", {
     params: OrderParamsModel,
@@ -58,7 +60,7 @@ export const ParamsStoreModel = types
         return Promise.reject(error.response);
       }
     }),
-    setStatus: (status: string) => {
+    setStatus: (status: string): IOrderParamsModel => {
       self.params = { ...self.params, status };
       return self.params;
     },

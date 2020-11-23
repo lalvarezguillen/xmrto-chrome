@@ -1,8 +1,13 @@
-import { OrderStoreModel, initialState, IOrderStoreModel } from "./order";
+import {
+  OrderStoreModel,
+  initialState,
+  IOrderStoreModel,
+  IOrderModel,
+} from "./order";
 import orderMock from "../__mock__/order";
 
 jest.mock("../services", () => ({
-  getOrderStatus: () =>
+  getOrderStatus: (): Promise<{ data: IOrderModel }> =>
     Promise.resolve({ data: require("../__mock__/order").default }),
 }));
 

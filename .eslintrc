@@ -35,6 +35,7 @@
     "react/prop-types": "off",
     "@typescript-eslint/no-var-requires": "off",
     "global-require": "off",
+    "@typescript-eslint/explicit-function-return-type": "warn",
     "prettier/prettier": [
       "warn",
       {
