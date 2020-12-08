@@ -1,4 +1,5 @@
 export const STATUS: { [key: string]: string } = {
+  VPN: "VPN",
   ONLINE: "ONLINE",
   OFFLINE: "OFFLINE",
   APIERROR: "APIERROR",

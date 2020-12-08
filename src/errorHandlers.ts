@@ -60,8 +60,12 @@ export const handleCode400 = (error: AxiosError): string => {
 
 export const successCallback = (setStatus: SetStatusType) => {
   return (response: AxiosResponse): AxiosResponse => {
-    // remove notification about connection
-    setStatus(STATUS.ONLINE);
+    if (document.cookie.includes("show_confirmation_popup=Yes")) {
+      setStatus(STATUS.VPN);
+    } else {
+      // remove notification about connection
+      setStatus(STATUS.ONLINE);
+    }
     return response;
   };
 };

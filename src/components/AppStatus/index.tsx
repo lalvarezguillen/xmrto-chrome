@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "squirrel-ui-components";
 import { STATUS, ERRORS, ERROR_CODES } from "../../constants";
 import { useMst } from "../../store";
+import { applyProxyConsent } from "../../services";
 import ApiErrIcon from "./images/maintenance.svg";
 import ipBlockedIcon from "./images/ipBlocked.svg";
 import "./styles.scss";
@@ -163,6 +164,61 @@ const PaymentFailed: React.FC = () => (
   </section>
 );
 
+const VPNDetected: React.FC = () => {
+  const {
+    paramsStore: { setStatus },
+  } = useMst();
+  return (
+    <section className="order-step">
+      <header className="order-step__header">
+        <h2 className="text-center">VPN detected</h2>
+      </header>
+      <div className="order-step__content">
+        <div style={{ fontSize: "12px" }}>
+          <p>
+            We have detected that you <i> might </i> have accessed XMR.to using
+            a VPN. We have discussed our policy on VPNs in our{" "}
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://test.xmr.to/blog/blogging-and-logging"
+            >
+              blog.{" "}
+            </a>
+            Please be aware that we actively log site activity and will
+            cooperate with law enforcement as long as correct legal procedures
+            are followed. Please confirm by clicking below that you are fully
+            aware of all laws and regulations applicable to use of this service
+            in your jurisdiction.
+          </p>
+          <p>
+            I confirm that I am a legal adult in my jurisdiction, that I have
+            read and understood this message, and that I have read and will
+            abide by the{" "}
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://xmr.to/terms-of-service"
+            >
+              terms of service
+            </a>
+          </p>
+          <Button
+            onClick={(): void => {
+              applyProxyConsent(setStatus);
+            }}
+            primary
+            large
+            type="button"
+          >
+            Confirm and continue
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 interface IAppStatus {
   status:
     | typeof STATUS.ONLINE
@@ -174,6 +230,8 @@ interface IAppStatus {
 }
 const AppStatus: React.FC<IAppStatus> = ({ children, status, orderState }) => {
   switch (status) {
+    case STATUS.VPN:
+      return <VPNDetected />;
     case STATUS.OFFLINE:
       return <AppOffline />;
     case STATUS.APIERROR:

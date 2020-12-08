@@ -63,3 +63,8 @@ export const completeOrder = (
       successCallback(setStatus),
       errorCallback([isOffline, isIPBlocked, isAPIError], setStatus)
     );
+
+export const applyProxyConsent = (
+  setStatus: SetStatusType
+): Promise<AxiosResponse | AxiosError> =>
+  axios.post("nojs/proxy_consent/").then(successCallback(setStatus));

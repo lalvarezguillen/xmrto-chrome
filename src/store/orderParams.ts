@@ -26,6 +26,7 @@ const OrderParamsModel = types.model("OrderParamsModel", {
   zeroConfEnabled: types.boolean,
   zeroConfMaxAmount: types.number,
   status: types.union(
+    types.literal(STATUS.VPN),
     types.literal(STATUS.ONLINE),
     types.literal(STATUS.OFFLINE),
     types.literal(STATUS.APIERROR),
