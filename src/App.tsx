@@ -8,6 +8,7 @@ import CreateOrderFrom from "./components/CreateOrderFrom";
 import UnpaidOrder from "./components/UnpaidOrder";
 import PaidOrder from "./components/PaidOrder";
 import ExpiredOrder from "./components/ExpiredOrder";
+import AppStatus from "./components/AppStatus";
 import { IFRAME_HEIGHT, ORDER_STATE } from "./constants";
 import "./styles.scss";
 
@@ -15,7 +16,10 @@ const defaultHeight = 360;
 
 const App: React.FC = () => {
   const {
-    paramsStore: { fetchParams },
+    paramsStore: {
+      fetchParams,
+      params: { status },
+    },
     orderStore: { order, fetchOrder },
   } = useMst();
   useEffect(() => {
@@ -68,7 +72,11 @@ const App: React.FC = () => {
       className="app"
       style={{ height: `${IFRAME_HEIGHT[order.state] || defaultHeight}px` }}
     >
-      <div className="app__left">{renderSwitch()}</div>
+      <div className="app__left">
+        <AppStatus orderState={order.state} status={status}>
+          {renderSwitch()}
+        </AppStatus>
+      </div>
       <div className="app__right">
         <OrderCountDown />
         <Rate />

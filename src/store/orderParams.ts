@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-import { types, flow, Instance } from "mobx-state-tree";
+import { types, flow, Instance, getRoot } from "mobx-state-tree";
 import { getOrderParameters } from "../services";
-import { STATUS } from "../constants";
+import { ERROR_CODES, STATUS } from "../constants";
 import { applySnapshot, saveSnapshot } from "./utils";
 
 export const initialState = {
@@ -42,9 +42,28 @@ export const ParamsStoreModel = types
     params: OrderParamsModel,
   })
   .actions((self) => ({
+    setStatus: (
+      newStatus: string,
+      errorCode?: number,
+      error?: string
+    ): IOrderParamsModel => {
+      const {
+        orderStore: {
+          order: { state },
+        },
+      } = getRoot(self);
+      // we should ignore "insufficient funds" error if there is tracking order
+      if (error === ERROR_CODES.INSUFFICIENT_FUNDS && state) {
+        return self.params;
+      }
+      self.params = { ...self.params, status: newStatus };
+      return self.params;
+    },
+  }))
+  .actions((self) => ({
     fetchParams: flow(function* fetchParamsActions() {
       try {
-        const response = yield getOrderParameters();
+        const response = yield getOrderParameters(self.setStatus);
         self.params = {
           price: parseFloat(response.data.price),
           lowerLimit: parseFloat(response.data.lower_limit),
@@ -60,10 +79,6 @@ export const ParamsStoreModel = types
         return Promise.reject(error.response);
       }
     }),
-    setStatus: (status: string): IOrderParamsModel => {
-      self.params = { ...self.params, status };
-      return self.params;
-    },
   }));
 
 export interface IParamsStoreModel extends Instance<typeof ParamsStoreModel> {}

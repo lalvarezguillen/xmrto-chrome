@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { types, flow, Instance } from "mobx-state-tree";
+import { types, flow, Instance, getRoot } from "mobx-state-tree";
 import {
   createOrder as createOrderRequest,
   getOrderStatus,
@@ -60,8 +60,11 @@ export const OrderStoreModel = types
   }))
   .actions((self) => ({
     fetchOrder: flow(function* fetchOrderAction(data) {
+      const {
+        paramsStore: { setStatus },
+      } = getRoot(self);
       try {
-        const response = yield getOrderStatus(data);
+        const response = yield getOrderStatus(data, setStatus);
         const formattedData = responseToCamelCase(response.data);
         const payment =
           response.data.payments && response.data.payments[0]
@@ -81,9 +84,23 @@ export const OrderStoreModel = types
       }
     }),
     createOrder: flow(function* createOrderAction(data) {
+      const {
+        paramsStore: { setStatus },
+      } = getRoot(self);
       try {
-        const response = yield createOrderRequest(data);
+        const response = yield createOrderRequest(data, setStatus);
         self.setData(responseToCamelCase(response.data));
+        return Promise.resolve(response);
+      } catch (error) {
+        return Promise.reject(error.response);
+      }
+    }),
+    completeOrder: flow(function* completeOrder(data: { uuid: string }) {
+      const {
+        paramsStore: { setStatus },
+      } = getRoot(self);
+      try {
+        const response = yield completeOrderRequest(data, setStatus);
         return Promise.resolve(response);
       } catch (error) {
         return Promise.reject(error.response);
@@ -92,8 +109,6 @@ export const OrderStoreModel = types
     setOrderDestAddress: (address: string): void => {
       self.order = { ...initialState.order, btcDestAddress: address };
     },
-    completeOrder: (data: { uuid: string }): Promise<void> =>
-      completeOrderRequest(data),
   }));
 
 export interface IOrderStoreModel extends Instance<typeof OrderStoreModel> {}
