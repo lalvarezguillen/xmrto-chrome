@@ -1,8 +1,9 @@
 {
   "manifest_version": 2,
   "name": "XMR.to",
-  "description": "Xmr.To allows privacy conscious individuals to pay bitcoin-accepting merchants in monero",
-  "version": "1.0.2",
+  "description": "XMR.to allows people who love Monero to interact with all the merchants that for better or for worse still only operate in Bitcoin. Our terms of service https://xmr.to/terms-of-service",
+  "version": "1.0.0",
+  "homepage_url": "https://github.com/XMRto/xmrto-chrome",
   "options_ui": {
     "page": "options.html",
     "open_in_tab": false

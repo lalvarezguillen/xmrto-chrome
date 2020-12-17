@@ -3,7 +3,6 @@ window.chrome.runtime.onMessage.addListener(({ type, options, callback = () => {
     chrome.notifications.create('', options, callback);
   }
   if (type === "options") {
-    console.log(chrome.runtime.openOptionsPage);
     if (chrome.runtime.openOptionsPage) {
       chrome.runtime.openOptionsPage();
     }
