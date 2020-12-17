@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "XMR.to",
-  "description": "XMR.to allows people who love Monero to interact with all the merchants that for better or for worse still only operate in Bitcoin. Our terms of service https://xmr.to/terms-of-service",
-  "version": "1.0.0",
+  "description": "XMR.to allows people who love Monero to interact with all the merchants that for better or for worse still only operate in Bitcoin.",
+  "version": "1.0.4",
   "homepage_url": "https://github.com/XMRto/xmrto-chrome",
   "options_ui": {
     "page": "options.html",
@@ -12,14 +12,12 @@
     {
       "js": ["content.js"],
       "css": ["content.css" ],
-      "matches": [ "\u003Call_urls>" ],
+      "matches": ["<all_urls>"],
       "all_frames": false
     }
   ],
   "permissions": [
     "activeTab",
-    "https://xmr.to/",
-    "notifications",
     "storage"
   ],
   "background":{
